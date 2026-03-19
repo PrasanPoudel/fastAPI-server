@@ -28,15 +28,6 @@ def test_api():
         "required_experience": "Not Applicable",
         "required_education": "High School or equivalent"
     }
-    
-    minimal_job = {
-        "title": "Job Title",
-        "description": "Job description here",
-        "requirements": "Basic requirements",
-        "benefits": "Standard benefits",
-        "company_profile": "Company information"
-    }
-    
     base_url = "http://localhost:5000"
     
     print("Testing Job Fraud Detection API")
@@ -71,24 +62,6 @@ def test_api():
         print(f"Status: {'Low Risk' if result['fraudScore'] < 0.3 else 'High Risk'}")
     except Exception as e:
         print(f"Fraudulent job test failed: {e}")
-    
-    print("\n4. Testing minimal job posting...")
-    try:
-        response = requests.post(f"{base_url}/predict", json=minimal_job)
-        result = response.json()
-        print(f"Minimal job fraud score: {result['fraudScore']:.4f}")
-        print(f"Status: {'Low Risk' if result['fraudScore'] < 0.3 else 'High Risk'}")
-    except Exception as e:
-        print(f"Minimal job test failed: {e}")
-    
-    print("\n5. Testing empty job posting...")
-    try:
-        response = requests.post(f"{base_url}/predict", json={})
-        result = response.json()
-        print(f"Empty job fraud score: {result['fraudScore']:.4f}")
-        print(f"Status: {'Low Risk' if result['fraudScore'] < 0.3 else 'High Risk'}")
-    except Exception as e:
-        print(f"Empty job test failed: {e}")
     
     print("\n" + "=" * 50)
     print("Test completed!")

@@ -32,17 +32,19 @@ class JobData(BaseModel):
     requirements: str = ""
     benefits: str = ""
     company_profile: str = ""
+
     location: Optional[str] = None
     department: Optional[str] = None
     salary_range: Optional[str] = None
     employment_type: Optional[str] = None
     required_experience: Optional[str] = None
     required_education: Optional[str] = None
+    has_company_logo: Optional[int] = 0   # 0 or 1
 
 app = FastAPI(
     title="Job Fraud Detection API",
     description="API for predicting job posting fraud probability using Random Forest model",
-    version="1.0.0"
+    version="1.1.0"
 )
 
 model = None
@@ -71,22 +73,17 @@ def load_model():
 @app.on_event("startup")
 async def startup_event():
     if not load_model():
-        pass
-
+        print("Model failed to load")
 @app.get("/")
 async def root():
     return {
         "message": "Job Fraud Detection API",
-        "version": "1.0.0",
-        "endpoints": {
-            "/predict": "POST endpoint for fraud prediction",
-            "/health": "GET endpoint to check API health"
-        },
-        "model_info": {
-            "type": "Random Forest Classifier",
-            "threshold": 0.30,
-            "output_range": "0.0 to 1.0 (fraud probability)"
-        }
+        "version": "1.1.0",
+        "features_used": [
+            "text (title, description, requirements, benefits, company_profile)",
+            "categorical (location, department, salary_range, employment_type, required_experience, required_education)",
+            "numeric (has_company_logo)"
+        ]
     }
 
 @app.get("/health")
@@ -100,21 +97,21 @@ async def predict_fraud(job_data: JobData):
     try:
         if model is None or preprocessor is None:
             raise HTTPException(status_code=500, detail="Model not loaded")
-        
         input_data = pd.DataFrame({
             'title': [job_data.title],
             'description': [job_data.description],
             'requirements': [job_data.requirements],
             'benefits': [job_data.benefits],
             'company_profile': [job_data.company_profile],
+
             'location': [job_data.location or "missing"],
             'department': [job_data.department or "missing"],
             'salary_range': [job_data.salary_range or "missing"],
             'employment_type': [job_data.employment_type or "missing"],
             'required_experience': [job_data.required_experience or "missing"],
-            'required_education': [job_data.required_education or "missing"]
+            'required_education': [job_data.required_education or "missing"],
+            'has_company_logo': [job_data.has_company_logo if job_data.has_company_logo is not None else 0]
         })
-        
         input_data['combined_text'] = (
             input_data['title'] + " " +
             input_data['description'] + " " +
@@ -122,13 +119,15 @@ async def predict_fraud(job_data: JobData):
             input_data['benefits'] + " " +
             input_data['company_profile']
         ).apply(clean_text)
-        
+
         X_transformed = preprocessor.transform(input_data)
         probabilities = model.predict_proba(X_transformed)
+
         fraud_score = float(probabilities[0][1])
-        
-        return {"fraudScore": fraud_score}
-        
+
+        return {
+            "fraudScore": fraud_score,
+        }
+
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
-
