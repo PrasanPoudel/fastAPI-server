@@ -42,7 +42,7 @@ MODEL_DIR = "models"
 
 TARGET_COLUMN = "fraudulent"
 
-THRESHOLD = 0.30
+THRESHOLD = 0.50
 
 TEXT_COLUMNS = [
     "title",
