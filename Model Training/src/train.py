@@ -30,9 +30,9 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
 
-# ----------------------------
+
 # Setup
-# ----------------------------
+
 
 nltk.download("stopwords")
 nltk.download("wordnet")
@@ -65,9 +65,9 @@ stop_words = set(stopwords.words("english"))
 lemmatizer = WordNetLemmatizer()
 
 
-# ----------------------------
+
 # Text Cleaning
-# ----------------------------
+
 
 def clean_text(text):
 
@@ -84,9 +84,9 @@ def clean_text(text):
     return " ".join(words)
 
 
-# ----------------------------
+
 # Load Dataset
-# ----------------------------
+
 
 def load_data():
 
@@ -128,9 +128,9 @@ def load_data():
     return X, y, categorical_cols
 
 
-# ----------------------------
+
 # Evaluation
-# ----------------------------
+
 
 def evaluate_model(y_true, y_pred, y_proba):
 
@@ -157,9 +157,9 @@ def evaluate_model(y_true, y_pred, y_proba):
     }
 
 
-# ----------------------------
+
 # CSV Comparison
-# ----------------------------
+
 
 def generate_comparison_table(results):
 
@@ -204,9 +204,9 @@ def generate_comparison_table(results):
     return df
 
 
-# ----------------------------
+
 # PDF Report
-# ----------------------------
+
 
 def generate_pdf_report(comparison_df, detailed_results):
 
@@ -305,9 +305,9 @@ def generate_pdf_report(comparison_df, detailed_results):
     print(f"\nPDF report saved: {pdf_path}")
 
 
-# ----------------------------
+
 # Training
-# ----------------------------
+
 
 def train():
 
