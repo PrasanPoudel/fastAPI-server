@@ -123,8 +123,14 @@ async def predict_fraud(job_data: JobData):
         X_transformed = preprocessor.transform(input_data)
         probabilities = model.predict_proba(X_transformed)
 
-        fraud_score = float(probabilities[0][1])
 
+        p = float(probabilities[0][1])
+
+        if p >= 0.5:
+            fraud_score = 1
+        else:
+            fraud_score=p*2.5
+        
         return {
             "fraudScore": fraud_score,
         }

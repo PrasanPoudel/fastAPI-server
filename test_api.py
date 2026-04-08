@@ -16,18 +16,18 @@ def test_api():
     }
     
     fraudulent_job = {
-        "title": "Work From Home Data Entry",
-        "description": "Earn $5000 per week from home! No experience required. Just click the link to get started.",
-        "requirements": "Must have internet connection and email address",
-        "benefits": "Unlimited earning potential, no boss, work anytime",
-        "company_profile": "We are a global company with millions of satisfied customers",
-        "location": "Remote",
-        "department": "Data Entry",
-        "salary_range": "5000-10000",
-        "employment_type": "Part-time",
-        "required_experience": "Not Applicable",
-        "required_education": "High School or equivalent"
-    }
+    "title": "Work From Home Software Engineer ",
+    "description": "Join our team and start earning big from home! No experience needed. You will handle simple tasks online and get paid immediately. Limited spots available!",
+    "requirements": "No degree required, no experience required. Just a computer and internet connection.",
+    "benefits": "Get paid daily, guaranteed bonuses, free laptop provided",
+    "company_profile": "A global tech company with opportunities for everyone. Fast growing and highly reputable.",
+    "location": "Anywhere, World",
+    "department": "Engineering",
+    "salary_range": "50000-70000 per month",
+    "employment_type": "Full-time / Remote",
+    "required_experience": "None",
+    "required_education": "Not required"
+}
     base_url = "http://localhost:5000"
     
     print("Testing Job Fraud Detection API")
