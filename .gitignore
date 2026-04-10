@@ -1,7 +1,7 @@
 # Python cache
 __pycache__
 *.pyc
-
+Model Training/src/models/*.pkl
 # Virtual environment
 venv
 .env
