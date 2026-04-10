@@ -129,9 +129,9 @@ async def predict_fraud(job_data: JobData):
         if p >= 0.5:
             fraud_score = 1
         elif p >= 0.25:
-                fraud_score = 0.5 + p  
+                fraud_score = p * 2
         else:
-            fraud_score=p*2
+            fraud_score= p
         
         return {
             "fraudScore": fraud_score,
