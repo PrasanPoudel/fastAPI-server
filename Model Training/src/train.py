@@ -203,10 +203,10 @@ def train():
 
     preprocessor = ColumnTransformer([
         ("text", TfidfVectorizer(
-            max_features=10000,
+            max_features=25000,
             ngram_range=(1,2),
             min_df=5,
-            max_df=0.9,
+            max_df=0.99,
             sublinear_tf=True
         ), "combined_text"),
         ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_cols)
@@ -238,7 +238,7 @@ def train():
         random_state=42
     ),
     "LogisticRegression": LogisticRegression(
-        max_iter=1000,
+        max_iter=100,
         class_weight="balanced",
         random_state=42,
         n_jobs=-1
