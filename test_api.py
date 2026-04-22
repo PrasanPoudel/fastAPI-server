@@ -13,7 +13,8 @@ def test_api():
         "salary_range": "110000-140000",
         "employment_type": "Full-time",
         "required_experience": "Senior level",
-        "required_education": "Bachelor's Degree"
+        "required_education": "Bachelor's Degree",
+        "has_company_logo": 1
     },
     {
         "title": "Frontend Developer (React)",

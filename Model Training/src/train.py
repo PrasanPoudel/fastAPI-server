@@ -45,7 +45,7 @@ TEXT_COLUMNS = [
     "benefits",
     "company_profile"
 ]
-
+NUMERIC_COLUMNS = ["has_company_logo"]
 DROP_COLUMNS = [
     "job_id",
     "has_questions",
@@ -74,6 +74,9 @@ def load_data():
     for col in TEXT_COLUMNS:
         if col in df.columns:
             df[col] = df[col].fillna("")
+    
+    for col in NUMERIC_COLUMNS:
+        df[col] = df[col].fillna(0).astype(int)
 
     df["combined_text"] = (
         df["title"] + " " +
@@ -209,7 +212,8 @@ def train():
             max_df=0.99,
             sublinear_tf=True
         ), "combined_text"),
-        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_cols)
+        ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_cols),
+         ("num", "passthrough", NUMERIC_COLUMNS)
     ])
 
     X_train_proc = preprocessor.fit_transform(X_train)
@@ -238,7 +242,7 @@ def train():
         random_state=42
     ),
     "LogisticRegression": LogisticRegression(
-        max_iter=100,
+        max_iter=200,
         class_weight="balanced",
         random_state=42,
         n_jobs=-1
